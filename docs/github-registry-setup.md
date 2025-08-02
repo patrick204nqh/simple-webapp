@@ -26,11 +26,11 @@ git push origin main
 ```
 
 ### Automatic tags created:
-- `ghcr.io/[username]/simple-webapp:latest` ← Always points to newest
-- `ghcr.io/[username]/simple-webapp:v1.0.3` ← Auto-incremented version
-- `ghcr.io/[username]/simple-webapp:1.0` ← Major.minor version
-- `ghcr.io/[username]/simple-webapp:main` ← Main branch version  
-- `ghcr.io/[username]/simple-webapp:main-abc1234` ← Specific commit
+- `ghcr.io/patrick204nqh/simple-webapp:latest` ← Always points to newest
+- `ghcr.io/patrick204nqh/simple-webapp:v1.0.3` ← Auto-incremented version
+- `ghcr.io/patrick204nqh/simple-webapp:1.0` ← Major.minor version
+- `ghcr.io/patrick204nqh/simple-webapp:main` ← Main branch version  
+- `ghcr.io/patrick204nqh/simple-webapp:main-abc1234` ← Specific commit
 
 ### Version increments automatically:
 - First push: `v1.0.0`
@@ -42,23 +42,23 @@ git push origin main
 
 ### Latest version (recommended):
 ```bash
-docker pull ghcr.io/[username]/simple-webapp:latest
-docker run -d -p 8080:80 ghcr.io/[username]/simple-webapp:latest
+docker pull ghcr.io/patrick204nqh/simple-webapp:latest
+docker run -d -p 8080:80 ghcr.io/patrick204nqh/simple-webapp:latest
 ```
 
 ### Specific version:
 ```bash
-docker pull ghcr.io/[username]/simple-webapp:v1.0.3
-docker run -d -p 8080:80 ghcr.io/[username]/simple-webapp:v1.0.3
+docker pull ghcr.io/patrick204nqh/simple-webapp:v1.0.3
+docker run -d -p 8080:80 ghcr.io/patrick204nqh/simple-webapp:v1.0.3
 ```
 
 ### Update docker-compose.yml:
 ```yaml
 services:
   webapp:
-    image: ghcr.io/[username]/simple-webapp:latest  # Always latest
+    image: ghcr.io/patrick204nqh/simple-webapp:latest  # Always latest
     # OR
-    image: ghcr.io/[username]/simple-webapp:v1.0.3  # Specific version
+    image: ghcr.io/patrick204nqh/simple-webapp:v1.0.3  # Specific version
     ports:
       - "8080:80"
 ```
@@ -87,13 +87,13 @@ git push origin v2.0.0
 ### Manual push:
 ```bash
 # Build locally
-docker build -t ghcr.io/[username]/simple-webapp:v1.5.0 .
+docker build -t ghcr.io/patrick204nqh/simple-webapp:v1.5.0 .
 
 # Login to GitHub Container Registry
-echo $GITHUB_TOKEN | docker login ghcr.io -u [username] --password-stdin
+echo $GITHUB_TOKEN | docker login ghcr.io -u patrick204nqh --password-stdin
 
 # Push manually  
-docker push ghcr.io/[username]/simple-webapp:v1.5.0
+docker push ghcr.io/patrick204nqh/simple-webapp:v1.5.0
 ```
 
 ## Version History

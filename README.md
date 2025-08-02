@@ -19,7 +19,7 @@ docker run -d \
   -p 80:80 \
   -p 61208:61208 \
   --name simple-webapp \
-  patrick204nqh/simple-webapp:latest
+  ghcr.io/patrick204nqh/simple-webapp:latest
 
 # With service configuration
 docker run -d \
@@ -27,7 +27,7 @@ docker run -d \
   -p 61208:61208 \
   -v /path/to/services.json:/app/config/services.json:ro \
   --name simple-webapp \
-  patrick204nqh/simple-webapp:latest
+  ghcr.io/patrick204nqh/simple-webapp:latest
 ```
 
 ## Configuration
