@@ -16,7 +16,13 @@ Simple guide to automatically push Docker images to Docker Hub when you update y
    - `DOCKER_USERNAME` = `patrick204nqh`
    - `DOCKER_PASSWORD` = the token from step 1
 
-### 3. Done!
+### 3. Enable GitHub Actions permissions
+1. Go to your GitHub repo → Settings → Actions → General
+2. Under "Workflow permissions", select:
+   - **Read and write permissions**
+   - ✅ Check "Allow GitHub Actions to create and approve pull requests"
+
+### 4. Done!
 The workflow is already setup. Every time you push to `main`, it builds and pushes to Docker Hub.
 
 ## How Auto-Versioning Works
