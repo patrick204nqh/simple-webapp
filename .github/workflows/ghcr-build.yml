@@ -3,8 +3,24 @@ name: Build and Push to GitHub Container Registry
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'app/**'
+      - 'config/**'
+      - 'scripts/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'requirements.txt'
+      - '.github/workflows/**'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'app/**'
+      - 'config/**'
+      - 'scripts/**'
+      - 'Dockerfile'
+      - 'docker-compose.yml'
+      - 'requirements.txt'
+      - '.github/workflows/**'
 
 jobs:
   build:
