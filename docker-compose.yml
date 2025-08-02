@@ -1,0 +1,25 @@
+services:
+  simple-webapp:
+    build: .
+    image: patrick204nqh/simple-webapp:latest
+    container_name: simple-webapp
+    ports:
+      - "8080:80"
+      - "61208:61208"
+    volumes:
+      - ./config/services.json:/app/config/services.json:ro
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+
+  test-redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+
+  test-postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: testpass
+    ports:
+      - "5433:5432"

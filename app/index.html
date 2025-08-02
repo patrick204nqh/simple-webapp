@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Monitor Dashboard</h1>
+        <div class="header-actions">
+            <a href="#" class="glances-link" onclick="updateGlancesLink(event)"><i class="fas fa-chart-bar"></i> Glances</a>
+            <span id="refresh-indicator"><i class="fas fa-hourglass-half"></i></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Top Row: Instance Info and Quick Check -->
+        <div class="top-row">
+            <!-- Instance Info with Tabs -->
+            <div class="compact-card instance-info">
+                <div class="card-header">
+                    <h3><i class="fas fa-server"></i> Instance Info</h3>
+                    <button onclick="loadInstanceInfo()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" onclick="switchTab('system')">System</button>
+                        <button class="tab-btn" onclick="switchTab('resources')">Resources</button>
+                        <button class="tab-btn" onclick="switchTab('network')">Network</button>
+                        <button class="tab-btn" onclick="switchTab('runtime')">Runtime</button>
+                    </div>
+                    <div id="instance-info" class="tab-content">Loading...</div>
+                </div>
+            </div>
+
+            <!-- Quick Service Checker -->
+            <div class="compact-card quick-check">
+                <div class="card-header">
+                    <h3><i class="fas fa-plug"></i> Quick Check</h3>
+                </div>
+                <div class="quick-check-content">
+                    <div class="inline-form">
+                        <input type="text" id="check-host" placeholder="Host/IP" class="compact-input" />
+                        <input type="number" id="check-port" placeholder="Port" class="compact-input" />
+                        <button onclick="checkCustomService()" class="compact-btn">Check</button>
+                    </div>
+                    <div id="custom-check-result" class="result-compact"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="two-column">
+            <!-- Left Column -->
+            <div class="column">
+                <!-- Configured Services -->
+                <div class="compact-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-cogs"></i> Services</h3>
+                        <button onclick="loadServices()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                    <div id="services-list" class="services-compact">
+                        <div class="no-data">No services configured</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="column">
+                <!-- Network Tools -->
+                <div class="compact-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-network-wired"></i> Network Tools</h3>
+                    </div>
+                    <div class="tool-buttons">
+                        <button onclick="getSystemInfo()" class="tool-btn">System Info</button>
+                        <button onclick="scanNetwork()" class="tool-btn">Port Scan</button>
+                    </div>
+                    <div id="network-results" class="results-area"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

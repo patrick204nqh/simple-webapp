@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+      "name": "mysql",
+      "host": "10.0.2.10",
+      "port": 3306,
+      "type": "tcp"
+    },
+    {
+      "name": "redis",
+      "host": "10.0.2.10",
+      "port": 6379,
+      "type": "tcp"
+    },
+    {
+      "name": "postgres",
+      "host": "10.0.3.10",
+      "port": 5432,
+      "type": "tcp"
+    },
+    {
+      "name": "web-app",
+      "host": "10.0.1.20",
+      "port": 80,
+      "type": "http"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "name": "test-redis",
+      "host": "simple-webapp-test-redis-1",
+      "port": 6379,
+      "type": "tcp"
+    },
+    {
+      "name": "test-postgres",
+      "host": "simple-webapp-test-postgres-1",
+      "port": 5432,
+      "type": "tcp"
+    },
+    {
+      "name": "webapp-itself",
+      "host": "localhost",
+      "port": 80,
+      "type": "http"
+    }
+  ]
+}
