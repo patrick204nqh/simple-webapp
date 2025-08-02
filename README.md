@@ -34,6 +34,12 @@ Access: [Web UI](http://localhost) • [Glances](http://localhost:61208)
 
 ### Dashboard
 
+<img width="1783" height="956" alt="image" src="https://github.com/user-attachments/assets/21c0e1cc-8f3c-4a20-8207-5fb5e84c7ad2" />
+
+## Glances
+
+<img width="1799" height="969" alt="image" src="https://github.com/user-attachments/assets/aed26cb1-66ce-4f83-8019-8e83a969f29c" />
+
 ## Configuration
 
 Create `services.json` to define monitored services:
