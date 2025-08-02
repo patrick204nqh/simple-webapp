@@ -2,6 +2,12 @@
 
 <div align="center">
   <img src="public/images/simple-webapp-transparent-bg.png" alt="Simple Web App Logo" width="200"/>
+
+  [![Build Status](https://github.com/patrick204nqh/simple-webapp/actions/workflows/ghcr-build.yml/badge.svg)](https://github.com/patrick204nqh/simple-webapp/actions/workflows/ghcr-build.yml)
+  [![Container Registry](https://img.shields.io/badge/container-ghcr.io-blue)](https://ghcr.io/patrick204nqh/simple-webapp)
+  [![Docker Pulls](https://img.shields.io/docker/pulls/patrick204nqh/simple-webapp)](https://hub.docker.com/r/patrick204nqh/simple-webapp)
+  [![License](https://img.shields.io/github/license/patrick204nqh/simple-webapp)](https://github.com/patrick204nqh/simple-webapp/blob/main/LICENSE)
+  [![Issues](https://img.shields.io/github/issues/patrick204nqh/simple-webapp)](https://github.com/patrick204nqh/simple-webapp/issues)
 </div>
 
 A flexible monitoring web application for infrastructure practice. Test connectivity, monitor system resources, and explore network configurations.
