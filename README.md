@@ -1,47 +1,49 @@
 # Simple Web App
 
-A flexible monitoring web application for infrastructure practice. Check connectivity to any service, monitor system resources, and explore network configurations.
+<div align="center">
+  <img src="public/images/simple-webapp-transparent-bg.png" alt="Simple Web App Logo" width="200"/>
+</div>
+
+A flexible monitoring web application for infrastructure practice. Test connectivity, monitor system resources, and explore network configurations.
 
 ## Features
 
-- 🔌 **Universal Service Checker**: Test connectivity to any host:port combination
-- 📊 **System Monitoring**: Glances integration for real-time metrics
-- 🌐 **Network Tools**: Port scanning and network discovery
-- 📝 **Configurable Services**: Optional JSON configuration for predefined services
-- 🐳 **Fully Containerized**: Easy deployment with Docker
-- 🚀 **No Dependencies**: Works with any backend services (or none at all)
+- 🔌 **Service Connectivity**: Test any host:port combination
+- 📊 **System Monitoring**: Real-time metrics via Glances integration
+- 🌐 **Network Tools**: Port scanning and discovery
+- 📝 **Configurable**: Optional JSON configuration for predefined services
+- 🐳 **Containerized**: Docker deployment ready
+- 🚀 **Zero Dependencies**: Works standalone or with any backend
 
 ## Quick Start
 
 ```bash
-# Pull and run
-docker run -d \
-  -p 80:80 \
-  -p 61208:61208 \
-  --name simple-webapp \
+# Basic deployment
+docker run -d -p 80:80 -p 61208:61208 --name simple-webapp \
   ghcr.io/patrick204nqh/simple-webapp:latest
 
-# With service configuration
-docker run -d \
-  -p 80:80 \
-  -p 61208:61208 \
+# With custom services configuration
+docker run -d -p 80:80 -p 61208:61208 \
   -v /path/to/services.json:/app/config/services.json:ro \
-  --name simple-webapp \
-  ghcr.io/patrick204nqh/simple-webapp:latest
+  --name simple-webapp ghcr.io/patrick204nqh/simple-webapp:latest
 ```
+
+Access: [Web UI](http://localhost) • [Glances](http://localhost:61208)
+
+## Screenshots
+
+### Dashboard
 
 ## Configuration
 
-### Optional Services Configuration
-
-Create a `services.json` file to define services to monitor:
+Create `services.json` to define monitored services:
 
 ```json
 {
   "services": [
     {
       "name": "my-database",
-      "host": "192.168.1.100",
+      "host": "192.168.1.100", 
       "port": 5432,
       "type": "tcp"
     }
@@ -49,48 +51,40 @@ Create a `services.json` file to define services to monitor:
 }
 ```
 
-Mount it to `/app/config/services.json` in the container.
+Mount to `/app/config/services.json` in container.
 
 ## API Endpoints
 
-- `GET /` - Web UI
-- `GET /api/instance-info` - Instance metadata
-- `GET /api/services` - List configured services
-- `POST /api/check-service` - Check service connectivity
-- `GET /api/system-info` - System information
-- `POST /api/network-scan` - Scan network ports
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Web UI |
+| `GET` | `/api/instance-info` | Instance metadata |
+| `GET` | `/api/services` | List configured services |
+| `POST` | `/api/check-service` | Check service connectivity |
+| `GET` | `/api/system-info` | System information |
+| `POST` | `/api/network-scan` | Scan network ports |
 
 ## Use Cases
 
-1. **AWS Practice**: Monitor EC2 instances and services
-2. **Local Development**: Check Docker containers
-3. **Network Troubleshooting**: Test connectivity
-4. **Learning Tool**: Understand networking and monitoring
+- **Infrastructure Practice**: Monitor AWS EC2 instances and services
+- **Development**: Check local Docker containers and services
+- **Network Troubleshooting**: Test connectivity and diagnose issues
+- **Learning**: Understand networking, monitoring, and containerization
 
 ## Development
 
 ```bash
-# Build locally
-docker-compose build
-
-# Run with test services
-docker-compose up
-
-# Access at
-# - Web UI: http://localhost
-# - Glances: http://localhost:61208
+docker-compose build && docker-compose up
 ```
 
-## Environment Variables
+Access: [Web UI](http://localhost) • [Glances](http://localhost:61208)
 
-All environment variables are optional:
-- `FLASK_ENV`: Set to 'development' for debug mode
+**Environment Variables** (optional):
+- `FLASK_ENV=development` - Enable debug mode
 
-## No Lock-in
+## Why Simple Web App?
 
-This app doesn't require any specific:
-- Database (MySQL, PostgreSQL, Redis, etc.)
-- Cloud provider (AWS, GCP, Azure)
-- Service configuration
-
-It adapts to whatever environment you deploy it in!
+✅ **No vendor lock-in** - Works with any infrastructure  
+✅ **Zero dependencies** - No database or cloud provider required  
+✅ **Instant deployment** - Single Docker command to start  
+✅ **Flexible** - Adapts to your environment automatically
