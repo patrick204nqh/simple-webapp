@@ -1,0 +1,83 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+      
+    - name: Get next version
+      id: version
+      run: |
+        # Get the latest tag
+        git fetch --tags
+        LATEST_TAG=$(git tag -l "v*" --sort=-version:refname | head -n1)
+        
+        if [ -z "$LATEST_TAG" ]; then
+          # No tags exist, start with v1.0.0
+          NEW_VERSION="v1.0.0"
+        else
+          # Extract version numbers
+          VERSION=${LATEST_TAG#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
+          
+          # Increment patch version
+          PATCH=$((PATCH + 1))
+          NEW_VERSION="v${MAJOR}.${MINOR}.${PATCH}"
+        fi
+        
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        echo "New version will be: $NEW_VERSION"
+        
+    - name: Create and push tag
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag ${{ steps.version.outputs.new_version }}
+        git push origin ${{ steps.version.outputs.new_version }}
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Log in to Docker Hub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: patrick204nqh/simple-webapp
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+          type=raw,value=${{ steps.version.outputs.new_version }},enable={{is_default_branch}}
+          type=semver,pattern={{version}},value=${{ steps.version.outputs.new_version }}
+          type=semver,pattern={{major}}.{{minor}},value=${{ steps.version.outputs.new_version }}
+          
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
