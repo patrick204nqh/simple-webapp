@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple WebApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-brand">
+            <img src="/static/simple-webapp-transparent-bg.png" alt="Simple Web App" class="brand-logo">
+            <h1>Simple WebApp</h1>
+        </div>
+        <div class="header-actions">
+            <div class="tab-navigation">
+                <a href="/" class="tab-nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="/instance-info" class="tab-nav-link active"><i class="fas fa-server"></i> Instance</a>
+                <a href="/network-analysis" class="tab-nav-link"><i class="fas fa-network-wired"></i> Network</a>
+            </div>
+            <div class="header-tools">
+                <a href="#" class="glances-link" onclick="updateGlancesLink(event)"><i class="fas fa-chart-bar"></i> Glances</a>
+                <span id="refresh-indicator"><i class="fas fa-hourglass-half"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- System Overview (Full Width) -->
+        <div class="system-overview">
+            <div class="compact-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line"></i> System Overview</h3>
+                    <button onclick="loadInstanceInfo()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                </div>
+                <div id="system-overview" class="overview-content">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Detailed Instance Information -->
+        <div class="compact-card">
+            <div class="card-header">
+                <h3><i class="fas fa-server"></i> Detailed Information</h3>
+                <button onclick="loadInstanceInfo()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+            </div>
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="switchTab('system')">System</button>
+                    <button class="tab-btn" onclick="switchTab('resources')">Resources</button>
+                    <button class="tab-btn" onclick="switchTab('network')">Network</button>
+                    <button class="tab-btn" onclick="switchTab('runtime')">Runtime</button>
+                </div>
+                <div id="instance-info" class="tab-content">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

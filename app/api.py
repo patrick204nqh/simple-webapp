@@ -68,6 +68,32 @@ def index():
         )
         return "Application not found", 404
 
+
+@app.route('/instance-info')
+def instance_info_page():
+    """Serve the instance info page."""
+    try:
+        return render_template('instance-info.html')
+    except IOError as e:
+        logger.error(
+            "Failed to serve instance info page",
+            extra={'request_id': g.get('request_id'), 'error': str(e)}
+        )
+        return "Application not found", 404
+
+
+@app.route('/network-analysis')
+def network_analysis_page():
+    """Serve the network analysis page."""
+    try:
+        return render_template('network-analysis.html')
+    except IOError as e:
+        logger.error(
+            "Failed to serve network analysis page",
+            extra={'request_id': g.get('request_id'), 'error': str(e)}
+        )
+        return "Application not found", 404
+
 @app.route('/api/instance-info')
 def instance_info():
     """Get comprehensive instance information."""

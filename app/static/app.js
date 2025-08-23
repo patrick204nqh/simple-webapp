@@ -13,12 +13,19 @@ class MonitorDashboard {
         this.loadServices();
         this.setupEventListeners();
         this.startAutoRefresh();
+        
+        // Load system overview
+        const overviewContainer = document.getElementById('system-overview');
+        if (overviewContainer) {
+            this.loadInstanceInfo();
+        }
     }
 
     setupEventListeners() {
         // Enter key support for service checker
         const hostInput = document.getElementById('check-host');
         const portInput = document.getElementById('check-port');
+        const commonPorts = document.getElementById('common-ports');
         
         [hostInput, portInput].forEach(input => {
             input?.addEventListener('keypress', (e) => {
@@ -27,6 +34,13 @@ class MonitorDashboard {
                     this.checkCustomService();
                 }
             });
+        });
+        
+        // Common ports dropdown handler
+        commonPorts?.addEventListener('change', (e) => {
+            if (e.target.value) {
+                portInput.value = e.target.value;
+            }
         });
     }
 
@@ -44,7 +58,7 @@ class MonitorDashboard {
             indicator.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i>';
             setTimeout(() => {
                 indicator.innerHTML = '<i class="fas fa-hourglass-half"></i>';
-            }, 1000);
+            }, 600);
         }
     }
 
@@ -73,16 +87,58 @@ class MonitorDashboard {
     // Instance Information
     async loadInstanceInfo() {
         const container = document.getElementById('instance-info');
-        if (!container) return;
+        const overviewContainer = document.getElementById('system-overview');
+        if (!container && !overviewContainer) return;
 
         try {
             const data = await this.makeApiCall('/api/instance-info');
-            container.innerHTML = this.renderInstanceInfo(data);
+            if (container) {
+                container.innerHTML = this.renderInstanceInfo(data);
+            }
+            if (overviewContainer) {
+                overviewContainer.innerHTML = this.renderSystemOverview(data);
+            }
         } catch (error) {
-            container.innerHTML = `<div class="error">Failed to load instance info: ${error.message}</div>`;
+            const errorMsg = `<div class="error">Failed to load instance info: ${error.message}</div>`;
+            if (container) container.innerHTML = errorMsg;
+            if (overviewContainer) overviewContainer.innerHTML = errorMsg;
         }
     }
 
+    renderSystemOverview(data) {
+        const metrics = [
+            { label: 'CPU Usage', value: data.cpu_usage || '0%', key: 'cpu_usage' },
+            { label: 'Memory Usage', value: data.memory_usage || '0%', key: 'memory_usage' },
+            { label: 'Disk Usage', value: data.disk_usage || '0%', key: 'disk_usage' },
+            { label: 'Uptime', value: data.uptime || 'Unknown', key: 'uptime' }
+        ];
+        
+        return metrics.map(metric => {
+            const numValue = parseFloat(metric.value);
+            const isPercentage = metric.value.includes('%');
+            let progressClass = '';
+            let progressWidth = '0%';
+            
+            if (isPercentage) {
+                progressWidth = metric.value;
+                if (numValue > 80) progressClass = 'error';
+                else if (numValue > 60) progressClass = 'warning';
+            }
+            
+            return `
+                <div class="metric-card">
+                    <div class="metric-value">${metric.value}</div>
+                    <div class="metric-label">${metric.label}</div>
+                    ${isPercentage ? `
+                        <div class="progress-bar">
+                            <div class="progress-fill ${progressClass}" style="width: ${progressWidth}"></div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }).join('');
+    }
+    
     renderInstanceInfo(data) {
         // Organize information into categories for tabs
         const sections = {

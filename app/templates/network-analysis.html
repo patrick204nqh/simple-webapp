@@ -10,14 +10,14 @@
 <body>
     <div class="header">
         <div class="header-brand">
-            <img src="/static/simple-webapp-transparent-bg.png" alt="Simple WebApp" class="brand-logo">
+            <img src="/static/simple-webapp-transparent-bg.png" alt="Simple Web App" class="brand-logo">
             <h1>Simple WebApp</h1>
         </div>
         <div class="header-actions">
             <div class="tab-navigation">
-                <a href="/" class="tab-nav-link active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="/" class="tab-nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                 <a href="/instance-info" class="tab-nav-link"><i class="fas fa-server"></i> Instance</a>
-                <a href="/network-analysis" class="tab-nav-link"><i class="fas fa-network-wired"></i> Network</a>
+                <a href="/network-analysis" class="tab-nav-link active"><i class="fas fa-network-wired"></i> Network</a>
             </div>
             <div class="header-tools">
                 <a href="#" class="glances-link" onclick="updateGlancesLink(event)"><i class="fas fa-chart-bar"></i> Glances</a>
@@ -27,37 +27,25 @@
     </div>
 
     <div class="container">
-        <!-- System Overview (Full Width) -->
-        <div class="system-overview">
-            <div class="compact-card">
-                <div class="card-header">
-                    <h3><i class="fas fa-chart-line"></i> System Overview</h3>
-                    <button onclick="loadInstanceInfo()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
-                </div>
-                <div id="system-overview" class="overview-content">Loading...</div>
-            </div>
-        </div>
-
-        <!-- Two Column Layout -->
+        <!-- Network Tools -->
         <div class="two-column">
-            <!-- Service Monitor -->
             <div class="column">
                 <div class="compact-card">
                     <div class="card-header">
-                        <h3><i class="fas fa-cogs"></i> Service Monitor</h3>
-                        <button onclick="loadServices()" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                        <h3><i class="fas fa-tools"></i> Network Tools</h3>
                     </div>
-                    <div id="services-list" class="services-compact">
-                        <div class="no-data">No services configured</div>
+                    <div class="tool-buttons">
+                        <button onclick="getSystemInfo()" class="tool-btn">System Info</button>
+                        <button onclick="scanNetwork()" class="tool-btn">Port Scan</button>
                     </div>
+                    <div id="network-results" class="results-area"></div>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
             <div class="column">
                 <div class="compact-card">
                     <div class="card-header">
-                        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        <h3><i class="fas fa-bolt"></i> Advanced Checks</h3>
                     </div>
                     <div class="quick-actions-content">
                         <div class="action-section">
