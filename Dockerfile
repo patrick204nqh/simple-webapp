@@ -12,13 +12,9 @@ RUN apt-get update && apt-get install -y \
     jq \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir \
-    glances[web] \
-    bottle \
-    flask \
-    flask-cors \
-    requests \
-    psutil
+# Copy requirements first for better Docker layer caching
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
 WORKDIR /app
 

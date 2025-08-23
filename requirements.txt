@@ -1,0 +1,15 @@
+# Simple Web App - Python Dependencies
+# Core web framework
+Flask==2.3.3
+flask-cors==4.0.0
+
+# System monitoring and information
+psutil==5.9.5
+glances[web]==3.4.0.3
+
+# Development and testing (optional)
+# pytest==7.4.2
+# pytest-cov==4.1.0
+
+# Note: System tools (nmap, curl, etc.) are installed via Dockerfile
+# Note: requests removed - AWS metadata uses urllib which is built-in

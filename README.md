@@ -13,12 +13,11 @@ A flexible monitoring web application for infrastructure practice. Test connecti
 
 ## Features
 
-- 🔌 **Service Connectivity**: Test any host:port combination
-- 📊 **System Monitoring**: Real-time metrics via Glances integration
-- 🌐 **Network Tools**: Port scanning and discovery
-- 📝 **Configurable**: Optional JSON configuration for predefined services
-- 🐳 **Containerized**: Docker deployment ready
-- 🚀 **Zero Dependencies**: Works standalone or with any backend
+- 🔌 **Service Connectivity**: Test host:port combinations
+- 📊 **System Monitoring**: Real-time metrics via Glances
+- 🌐 **Network Scanning**: Port scanning (private networks only)
+- 📝 **Configurable**: JSON service configuration
+- 🐳 **Production Ready**: Health checks, logging, Docker deployment
 
 ## Quick Start
 
@@ -33,7 +32,7 @@ docker run -d -p 80:80 -p 61208:61208 \
   --name simple-webapp ghcr.io/patrick204nqh/simple-webapp:latest
 ```
 
-Access: [Web UI](http://localhost) • [Glances](http://localhost:61208)
+Access: [Web UI](http://localhost) • [Glances](http://localhost:61208) • [Health](http://localhost/health)
 
 ## Screenshots
 
@@ -66,14 +65,15 @@ Mount to `/app/config/services.json` in container.
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Web UI |
-| `GET` | `/api/instance-info` | Instance metadata |
-| `GET` | `/api/services` | List configured services |
-| `POST` | `/api/check-service` | Check service connectivity |
-| `GET` | `/api/system-info` | System information |
-| `POST` | `/api/network-scan` | Scan network ports |
+| Method | Endpoint             | Description         |
+| ------ | -------------------- | ------------------- |
+| `GET`  | `/`                  | Web UI              |
+| `GET`  | `/health`            | Health check        |
+| `GET`  | `/ready`             | Readiness probe     |
+| `GET`  | `/api/instance-info` | System metadata     |
+| `GET`  | `/api/services`      | Configured services |
+| `POST` | `/api/check-service` | Test connectivity   |
+| `POST` | `/api/network-scan`  | Port scanning       |
 
 ## Use Cases
 
@@ -85,17 +85,15 @@ Mount to `/app/config/services.json` in container.
 ## Development
 
 ```bash
-docker-compose build && docker-compose up
+docker compose build && docker compose up
 ```
 
-Access: [Web UI](http://localhost) • [Glances](http://localhost:61208)
+Access: [Web UI](http://localhost:8080) • [Glances](http://localhost:61208)
 
-**Environment Variables** (optional):
-- `FLASK_ENV=development` - Enable debug mode
 
 ## Why Simple Web App?
 
-✅ **No vendor lock-in** - Works with any infrastructure  
-✅ **Zero dependencies** - No database or cloud provider required  
-✅ **Instant deployment** - Single Docker command to start  
-✅ **Flexible** - Adapts to your environment automatically
+✅ **Zero dependencies** - No database required  
+✅ **Instant deployment** - Single Docker command  
+✅ **Production ready** - Health checks and monitoring  
+✅ **Security focused** - Private network scanning only
